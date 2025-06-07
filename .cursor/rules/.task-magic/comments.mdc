@@ -1,0 +1,392 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Comments and Documentation Standards
+
+## Overview
+
+This rule defines the comprehensive commenting and documentation standards for our TypeScript/Next.js application, ensuring code maintainability, scalability, and team collaboration at a senior engineering level.
+
+## File-Level Documentation
+
+### 1. File Header Comments
+Every file MUST start with a descriptive comment explaining:
+
+```typescript
+// File: filename.ts
+// Purpose: Brief description of what this file does and its role in the application
+// Dependencies: Key external dependencies or integrations
+//
+// Security/Performance/Business notes:
+// - Any security considerations (authentication, data validation, etc.)
+// - Performance implications or optimizations
+// - Business logic context that affects implementation
+//
+// Architecture notes:
+// - How this file fits into the overall system architecture
+// - Integration points with other components
+```
+
+### 2. API Route Headers (Required)
+For all API routes, use this enhanced format:
+
+```typescript
+// File: api/endpoint-name.ts
+// API route for [functionality description]. Handles [operations] and integrates with [systems].
+//
+// Security/UX notes:
+// - Rate limiting implementation and abuse prevention
+// - Authentication and authorization mechanisms
+// - User enumeration prevention strategies
+// - Data validation and sanitization approach
+// - Audit logging for sensitive operations
+//
+// Functions and logic blocks are annotated for clarity and maintainability.
+```
+
+## Interface and Type Documentation
+
+### 1. Interface Documentation (Required)
+Every interface MUST include comprehensive JSDoc:
+
+```typescript
+/**
+ * @interface InterfaceName
+ * @description Detailed description of what this interface represents and its purpose.
+ * @property {type} propertyName - Clear description of what this property represents and constraints.
+ * @property {type} [optionalProperty] - Description with indication of when this is provided.
+ * 
+ * @example
+ * // Example usage:
+ * const example: InterfaceName = {
+ *   propertyName: "value",
+ *   optionalProperty: "optional value"
+ * };
+ */
+interface InterfaceName {
+  propertyName: string;
+  optionalProperty?: string;
+}
+```
+
+### 2. Response Interface Standards
+For API response interfaces, include error states and success scenarios:
+
+```typescript
+/**
+ * @interface ApiResponse
+ * @description Standardized response structure for [endpoint description].
+ * @property {boolean} success - Indicates operation success/failure status.
+ * @property {DataType | DataType[]} [data] - Response payload on success.
+ * @property {string} [error] - High-level error message for client display.
+ * @property {string} [details] - Technical error details for debugging.
+ * @property {number} [totalCount] - Total records (for paginated responses).
+ * @property {object} [meta] - Additional metadata about the operation.
+ */
+```
+
+## Function Documentation
+
+### 1. Function Documentation Standards (Required)
+All exported functions and API handlers MUST include:
+
+```typescript
+/**
+ * @async
+ * @function functionName
+ * @param {Type} paramName - Parameter description and constraints.
+ * @param {NextApiRequest} req - The Next.js API request object with expected structure.
+ * @param {NextApiResponse<ResponseType>} res - The Next.js API response object.
+ *
+ * @description
+ * Comprehensive description of what this function does, including:
+ * - Primary purpose and business logic
+ * - Expected input/output behavior
+ * - Side effects and state changes
+ * - Integration points with external systems
+ *
+ * Operations:
+ * - List of supported operations (for multi-operation handlers)
+ * - Expected request/response patterns
+ * - Query parameters and their effects
+ *
+ * Security:
+ * - Authentication requirements and mechanisms
+ * - Authorization checks and tenant isolation
+ * - Data validation and sanitization approach
+ * - Rate limiting and abuse prevention
+ *
+ * Performance Considerations:
+ * - Database query optimization strategies
+ * - Caching implementation (if applicable)
+ * - Scalability considerations
+ *
+ * @returns {Promise<void>} Detailed description of return value or resolution.
+ * @throws {400} Specific conditions that trigger 400 errors.
+ * @throws {401} Authentication failure scenarios.
+ * @throws {403} Authorization failure scenarios.
+ * @throws {404} Resource not found conditions.
+ * @throws {405} Unsupported HTTP methods.
+ * @throws {409} Conflict scenarios (duplicates, constraints).
+ * @throws {429} Rate limiting scenarios.
+ * @throws {500} Internal server error conditions.
+ *
+ * @example
+ * // Example successful usage:
+ * const result = await functionName(validInput);
+ * 
+ * @example
+ * // Example error handling:
+ * try {
+ *   await functionName(input);
+ * } catch (error) {
+ *   // Handle specific error types
+ * }
+ */
+```
+
+### 2. Class Method Documentation
+For class methods in business logic:
+
+```typescript
+/**
+ * @method methodName
+ * @description What this method accomplishes and its role in the class.
+ * @param {Type} param - Parameter description and validation rules.
+ * @returns {Promise<Type>} Description of return value and success criteria.
+ * @throws {CustomError} When specific business logic conditions fail.
+ * 
+ * @internal
+ * Implementation notes:
+ * - Algorithm complexity: O(n) time, O(1) space
+ * - Database queries: 2 SELECT, 1 INSERT (worst case)
+ * - External API calls: 1 to service X (with retry logic)
+ * 
+ * @security
+ * - Input validation: [list validation rules]
+ * - Data sanitization: [describe sanitization approach]
+ * - Permission checks: [describe authorization logic]
+ */
+```
+
+## Inline Documentation
+
+### 1. Complex Logic Documentation
+For complex algorithms or business logic:
+
+```typescript
+// Algorithm: [Name/Description]
+// Complexity: Time O(n), Space O(1)
+// Purpose: Detailed explanation of why this approach was chosen
+//
+// Step 1: Description of first logical step
+// Step 2: Description of second logical step
+// Edge cases handled: [list specific edge cases]
+```
+
+### 2. Security-Critical Code
+For authentication, authorization, and data validation:
+
+```typescript
+// SECURITY: [Type of security concern being addressed]
+// Protection against: [specific attack vectors or vulnerabilities]
+// Validation rules: [list all validation rules being enforced]
+// Audit trail: [describe what is logged for security monitoring]
+```
+
+### 3. Performance-Critical Code
+For database queries, caching, and optimization:
+
+```typescript
+// PERFORMANCE: [Optimization technique being used]
+// Database impact: [describe query efficiency and indexing requirements]
+// Caching strategy: [describe cache keys, TTL, invalidation]
+// Scalability: [describe how this scales with data growth]
+```
+
+### 4. Business Logic Documentation
+For domain-specific business rules:
+
+```typescript
+// BUSINESS RULE: [Name of business rule being implemented]
+// Stakeholder: [Who defined this rule]
+// Context: [Why this rule exists]
+// Edge cases: [Business edge cases and their handling]
+// Future considerations: [Planned changes or extensions]
+```
+
+## Error Handling Documentation
+
+### 1. Error Response Standards
+Document error handling patterns:
+
+```typescript
+// Error Handling Strategy:
+// - User-friendly messages for client display
+// - Technical details for debugging (development only)
+// - Consistent error codes and HTTP status mapping
+// - Audit logging for security-sensitive failures
+// - Graceful degradation for non-critical errors
+```
+
+### 2. Validation Error Documentation
+For input validation:
+
+```typescript
+// Validation Rules:
+// - Required fields: [list required fields]
+// - Format constraints: [email format, phone format, etc.]
+// - Business constraints: [domain-specific validation rules]
+// - Security constraints: [XSS prevention, injection protection]
+```
+
+## Database Integration Documentation
+
+### 1. Prisma Query Documentation
+For database operations:
+
+```typescript
+// Database Operation: [Type of operation - READ/WRITE/UPDATE/DELETE]
+// Tables involved: [list tables and relationships]
+// Indexes required: [list required database indexes for performance]
+// Transaction requirements: [describe ACID requirements]
+// Tenant isolation: [describe multi-tenancy enforcement]
+```
+
+### 2. Migration Documentation
+For schema changes:
+
+```typescript
+// Migration: [migration_name]
+// Purpose: [business reason for schema change]
+// Breaking changes: [list any breaking changes]
+// Rollback strategy: [describe how to safely rollback]
+// Data migration: [describe any required data transformations]
+```
+
+## Testing Documentation
+
+### 1. Test Case Documentation
+For test functions:
+
+```typescript
+/**
+ * @test TestSuiteName
+ * @description What business scenario or technical requirement this test validates.
+ * 
+ * Test coverage:
+ * - Happy path: [describe normal operation testing]
+ * - Error cases: [list error scenarios tested]
+ * - Edge cases: [list boundary conditions tested]
+ * - Security: [describe security test coverage]
+ * 
+ * Dependencies:
+ * - Mock data: [describe test data requirements]
+ * - External services: [list mocked services]
+ * - Database state: [describe required database setup]
+ */
+```
+
+## Configuration and Environment Documentation
+
+### 1. Environment Variable Documentation
+For configuration management:
+
+```typescript
+// Environment Configuration:
+// - Required variables: [list required env vars]
+// - Optional variables: [list optional env vars with defaults]
+// - Security classification: [PUBLIC/PRIVATE/SECRET]
+// - Validation requirements: [format and constraint validation]
+```
+
+## Anti-Patterns to Avoid
+
+### 1. Avoid These Comment Patterns
+```typescript
+// DON'T: Obvious comments
+const user = getUser(); // Gets the user
+
+// DON'T: Commented-out code without explanation
+// const oldFunction = () => { ... }
+
+// DON'T: TODO comments without context
+// TODO: Fix this
+
+// DON'T: Generic error messages
+// Something went wrong
+```
+
+### 2. DO Use These Patterns Instead
+```typescript
+// DO: Explain WHY, not WHAT
+const user = getUser(); // Required for authorization check before proceeding
+
+// DO: Explain complex business logic
+// Calculate partnership score using weighted algorithm:
+// 50% proximity weight + 30% specialty alignment + 20% volume potential
+
+// DO: Document known limitations
+// LIMITATION: Current implementation supports max 1000 contacts per query
+// due to database timeout constraints. Pagination required for larger sets.
+
+// DO: Document TODO items with context
+// TODO: Implement batch processing for contact imports (Issue #123)
+// Context: Current single-record processing causes timeout for >500 contacts
+// Priority: High - blocking enterprise customers
+// Estimated effort: 2-3 days
+```
+
+## Compliance and Standards
+
+### 1. Accessibility Documentation
+For UI components:
+
+```typescript
+// ACCESSIBILITY:
+// - ARIA labels: [describe ARIA implementation]
+// - Keyboard navigation: [describe keyboard support]
+// - Screen reader support: [describe screen reader compatibility]
+// - Color contrast: [describe contrast compliance]
+```
+
+### 2. Performance Standards
+For performance-critical code:
+
+```typescript
+// PERFORMANCE REQUIREMENTS:
+// - Response time: <200ms for 95th percentile
+// - Throughput: Support 1000 concurrent users
+// - Memory usage: <100MB heap allocation
+// - Database: <5 queries per request maximum
+```
+
+## Review and Maintenance
+
+### 1. Comment Review Process
+- Comments MUST be updated when code changes
+- Outdated comments are considered technical debt
+- Comments should be reviewed during code review process
+- Complex business logic comments require stakeholder validation
+
+### 2. Documentation Maintenance
+- API documentation must be updated before deployment
+- Interface changes require corresponding comment updates
+- Security-related comments require security team review
+- Performance claims in comments must be validated with metrics
+
+## Implementation Standards
+
+### 1. Documentation Generation
+- Use JSDoc-compatible comments for automatic documentation generation
+- Maintain consistency with existing project documentation standards
+- Include practical examples that can be executed
+- Link to relevant external documentation where appropriate
+
+### 2. Code Quality Integration
+- Comments are part of code quality metrics
+- Missing critical comments should fail code quality checks
+- Comment quality is part of senior engineer performance expectations
+- Documentation coverage should be tracked and improved over time
